@@ -7,12 +7,28 @@ const generateToken = (userId) => {
 }
 
 
-const registerUser = async(req,res) => {};
+const registerUser = async(req,res) => {
+    try {} catch (error) {
+        res.status(500).json({message: "Server error",error:error.message});
+    }
+};
 
-const loginUser = async(req,res) => {};
+const loginUser = async(req,res) => {
+    try {} catch (error) {
+        res.status(500).json({message: "Server error",error:error.message});
+    }
+};
 
-const getUserProfile = async(req,res) => {};
+const getUserProfile = async(req,res) => {
+    try {} catch (error) {
+        res.status(500).json({message: "Server error",error:error.message});
+    }
+};
 
-const updateUserProfile = async(req,res) => {};
+const updateUserProfile = async(req,res) => {
+    try {} catch (error) {
+        res.status(500).json({message: "Server error",error:error.message});
+    }
+};
 
 module.exports = {registerUser, loginUser, getUserProfile, updateUserProfile }
