@@ -17,3 +17,13 @@ const protect = async (req,res,next) => {
         res.status(401).json({message: "Token Failed", error : err.message});
     }
 };
+
+// Middleware  for only admin acess     
+const adminOnly = ( req,res,next) => {
+    if(req.user && req.user.role === "admin"){
+        next();
+    } else {
+        res.status(403).json({message: "Access denied, admin only"});
+    }
+}
+module.exports = {protect,adminOnly};
