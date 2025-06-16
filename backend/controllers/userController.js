@@ -37,9 +37,10 @@ const registerUser = async (req, res) => {
     });
     // return user data with jwt
     res.status(201).json({
-      __id: user._id,
+      _id: user._id,
       name: user.name,
-      email: user.role,
+      email: user.email,
+      role: user.role,
       profileImageUrl: user.profileImageUrl,
       token: generateToken(user._id),
     });
