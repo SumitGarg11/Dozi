@@ -20,6 +20,8 @@ function Login() {
       return;
     }
     setError("");
+    try {
+    } catch (error) {}
   };
   return (
     <AuthLayout>
