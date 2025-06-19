@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPath";
 import { UserContext } from "../../context/useContext";
+import uploadImage from "../../utils/uploadImage";
 
 function SignUp() {
   const [profilePic, setProfilePic] = useState(null);
@@ -101,8 +102,8 @@ function SignUp() {
               type="password"
             />
             <Input
-              value={password}
-              onChange={({ target }) => setPassword(target.value)}
+              value={adminInviteToken}
+              onChange={({ target }) => setAdminInviteToken(target.value)}
               label="Admin Invite Token"
               placeholder="6 digit code"
               type="text"
