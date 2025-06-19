@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import AuthLayout from "../../components/layouts/AuthLayout";
 import { validateEmail } from "../../utils/helper";
 import ProfilePhotoSelector from "../../components/Inputs/ProfilePhotoSelector";
 import Input from "../../components/Inputs/Input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axiosInstance from "../../utils/axiosInstance";
+import { API_PATHS } from "../../utils/apiPath";
+import { UserContext } from "../../context/useContext";
 
 function SignUp() {
   const [profilePic, setProfilePic] = useState(null);
@@ -13,8 +16,14 @@ function SignUp() {
   const [adminInviteToken, setAdminInviteToken] = useState("");
   const [error, setError] = useState(null);
 
+  const {updateUser} = useContext(UserContext);
+  const navigate = useNavigate();
+
   const handleSignUp = async (e) => {
+
     e.preventDefault();
+    let profileImageUrl = '';
+
     if (!fullname) {
       setError("Please enter full name");
       return;
@@ -28,6 +37,37 @@ function SignUp() {
       return;
     }
     setError("");
+    // Sign Up Api Call
+    try {
+       if(profilePic){
+        const imgUploadRes = await uploadImage(profilePic);
+        profileImageUrl = imgUploadRes.imageUrl || "";
+       }
+      const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
+        name: fullname,
+        email,
+        password,
+        profileImageUrl,
+        adminInviteToken
+      });
+      const { token, role } = response.data;
+      if (token) {
+        localStorage.setItem("token", token);
+        updateUser(response.data);
+        // redirect based on role
+        if (role === "admin") {
+          navigate("/admin/dashboard");
+        } else {
+          navigate("/user/dashboard");
+        }
+      }
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError("Something went wrong , please try Again ");
+      }
+    }
   };
   return (
     <AuthLayout>
