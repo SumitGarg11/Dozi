@@ -5,7 +5,7 @@ import Input from "../../components/Inputs/Input";
 import { validateEmail } from "../../utils/helper";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPath";
-import { UserContext } from "../../context/useContext";
+import { UserContext } from "../../context/userContext";
 function Login() {
   const [email, setEmail] = useState("");
 
@@ -13,7 +13,7 @@ function Login() {
 
   const [error, setError] = useState(null);
 
-  const {updateUser} = useContext(UserContext);
+  const { updateUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
