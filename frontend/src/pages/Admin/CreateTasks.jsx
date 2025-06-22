@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import DashboardLayout from "../../components/layouts/DashboardLayout";
 import { useLocation, useNavigate } from "react-router-dom";
 import { LuTrash2 } from "react-icons/lu";
+import { PRIORITY_DATA } from "../../utils/data";
+import SelectDropdown from "../../components/Inputs/SelectDropdown";
+import SelectUsers from "../../components/Inputs/SelectUsers";
+import TodoListInput from "../../components/Inputs/TodoListInput";
+import AddAttachmnetsInput from "../../components/Inputs/AddAttachmnetsInput";
 
 function CreateTasks() {
   const location = useLocation();
@@ -86,6 +91,58 @@ function CreateTasks() {
                   handleValueChange("description", target.value)
                 }
               />
+            </div>
+            <div className="grid grid-cols-12 gap-4 mt-2 ">
+              <div className="col-span-6 md:col-span-4">
+                <label className="text-xs font-medium text-slate-600  ">
+                  Priority
+                </label>
+                <SelectDropdown
+                  options={PRIORITY_DATA}
+                  value={taskData.priority}
+                  onChange={(value) => handleValueChange("priority", value)}
+                  placeholder="Select Priority"
+                />
+              </div>
+              <div className="col-span-6 md:col-span-4">
+                <label className="text-xs font-medium text-slate-600 ">
+                  {" "}
+                  Due Date{" "}
+                </label>
+                <input
+                  placeholder="Create App UI"
+                  className="form-input"
+                  value={taskData.dueDate}
+                  onChange={({ target }) =>
+                    handleValueChange("dueDate", target.value)
+                  }
+                  type="date"
+                />
+              </div>
+              <div className="col-span-12 md:col-span-3">
+                <label className="text-xs  font-medium text-slate-600 ">
+                  Assign To
+                </label>
+                <SelectUsers
+                  selectUsers={taskData.assignedTo}
+                  setSelectUsers={(value) => {
+                    handleValueChange("assignedTo", value);
+                  }}
+                />
+              </div>
+            </div>
+            <div className="mt-3">
+              <label className="text-xs font-medium text-slate-600 ">TODO CheckList</label>
+              <TodoListInput
+                todoList={taskData?.todoChecklist}
+                setTodoList={(value) =>
+                  handleValueChange("todoChecklist", value)
+                }
+              />
+            </div>
+            <div className="mt-3 ">
+              <label className="text-xs font-medium text-slate-600 "> Add AttachmentsInput </label>
+              <AddAttachmnetsInput attachments ={taskData?.attachments} setAttachments={(value) => handleValueChange("attachments",value)} />
             </div>
           </div>
         </div>
