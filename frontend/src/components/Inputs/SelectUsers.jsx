@@ -10,16 +10,29 @@ const SelectUsers = ({ selectUsers, setSelectUsers }) => {
   const [allUsers, setAllUsers] = useState([]);
   const [isModalOpen, setIsModelOpen] = useState(false);
   const [tempSelectedUsers, setTempSelectedUsers] = useState([]);
+  //   const getAllUsers = async () => {
+  //     try {
+  //       const response = await axiosInstance.get(API_PATHS.USERS.GET_ALL_USERS);
+  //       if (response.data?.length > 0) {
+  //         setAllUsers(response.data);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching users: ", error);
+  //     }
+  //   };
   const getAllUsers = async () => {
     try {
       const response = await axiosInstance.get(API_PATHS.USERS.GET_ALL_USERS);
-      if (response.data?.length > 0) {
-        setAllUsers(response.data);
-      }
+      console.log("API response:", response.data); // ✅ helpful debug
+      const users = Array.isArray(response.data)
+        ? response.data
+        : response.data?.users || [];
+      setAllUsers(users);
     } catch (error) {
       console.error("Error fetching users: ", error);
     }
   };
+
   const toggleUserSelection = (userId) => {
     setTempSelectedUsers((prev) =>
       prev.includes(userId)

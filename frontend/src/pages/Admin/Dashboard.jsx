@@ -93,7 +93,7 @@ function Dashboard() {
             // icon={<IoMdCard />}
             label="In Progress Task"
             value={addThousandsSeparator(
-              dashboardData?.charts?.taskDistribution?.Pending || 0
+              dashboardData?.charts?.taskDistribution?.InProgress || 0
             )}
             color="bg-cyan-500 "
           />
